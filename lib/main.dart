@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primary),
         useMaterial3: true,
       ),
-      initialRoute: RoutesName.getHomeScreen(),
+      initialRoute: RoutesName.getDashboardScreen(),
       getPages: AppRoutes.appRoutes(),
       defaultTransition: Transition.topLevel,
     );

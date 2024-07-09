@@ -1,7 +1,7 @@
 class Images {
   const Images._();
 
-  static String get govtLogo => 'govt_logo'.png;
+  static String get cameraIcon => 'camera_icon'.png;
 
 
 }
