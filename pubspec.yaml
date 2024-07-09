@@ -1,0 +1,46 @@
+name: softbd_task
+description: "A new Flutter project."
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  shared_preferences: ^2.2.3
+  http: ^1.2.1
+  image_picker: ^1.1.2
+  fluttertoast: ^8.2.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/fonts/
+    - assets/images/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/NotoSerifBengali-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSerifBengali-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/NotoSerifBengali-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSerifBengali-Black.ttf
+          weight: 900
