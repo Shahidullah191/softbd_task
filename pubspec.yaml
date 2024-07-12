@@ -34,7 +34,7 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Inter
+    - family: NotoSerifBengali
       fonts:
         - asset: assets/fonts/NotoSerifBengali-Regular.ttf
           weight: 400

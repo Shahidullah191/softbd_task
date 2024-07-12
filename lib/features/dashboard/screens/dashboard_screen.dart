@@ -95,8 +95,9 @@ class DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: !GetPlatform.isMobile ? const SizedBox() : BottomAppBar(
           elevation: 10,
           notchMargin: 5,
-          surfaceTintColor: AppColor.white,
-          shadowColor: AppColor.black.withOpacity(0.5),
+          color: AppColor.white,
+          shadowColor: AppColor.white,
+          surfaceTintColor: Colors.transparent,
           shape: const CircularNotchedRectangle(),
 
           child: Padding(

@@ -5,5 +5,5 @@ class AppConstants  {
 
   static const String baseUrl = 'http://202.161.191.133:7006';
 
-  static const String token = 'ispmis_token';
+  static const String token = 'token';
 }

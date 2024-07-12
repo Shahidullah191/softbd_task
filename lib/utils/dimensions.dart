@@ -5,6 +5,7 @@ class Dimensions {
   static double fontSizeFifteen = 15;
   static double fontSizeSixteen = 16;
   static double fontSizeEighteen = 18;
+  static double fontSizeTwenty = 20;
   static double fontSizeTwentyFour = 24;
   static const double fontSizeThirty = 30;
 
@@ -14,6 +15,7 @@ class Dimensions {
   static const double paddingSizeTwenty = 20;
   static const double paddingSizeTwentyFive = 25;
   static const double paddingSizeThirty = 30;
+  static const double paddingSizeForty = 40;
 
   static const double marginSizeFive = 5;
   static const double marginSizeTen = 10;
