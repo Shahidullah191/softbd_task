@@ -9,12 +9,17 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Color? textColor;
   final Function()? onTap;
-  const CustomButton({super.key, this.height = 40, this.width, required this.text, this.textColor, this.onTap});
+  final double? radius;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  const CustomButton({super.key, this.height = 40, this.width, required this.text, this.textColor, this.onTap, this.radius, this.fontSize, this.fontWeight});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Container(
         width: width ?? MediaQuery.of(context).size.width,
         height: height,
@@ -23,10 +28,17 @@ class CustomButton extends StatelessWidget {
             colors: [AppColor.secondary, AppColor.primary],
             begin: Alignment.topLeft, end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(Dimensions.radiusFive),
+          borderRadius: BorderRadius.circular(radius ?? Dimensions.radiusFive),
         ),
         child: Center(
-          child: Text(text, style: notoSerifMedium.copyWith(color: textColor ?? AppColor.white, fontSize: Dimensions.fontSizeSixteen)),
+          child: Text(
+            text,
+            style: notoSerifMedium.copyWith(
+              color: textColor ?? AppColor.white,
+              fontSize: fontSize ?? Dimensions.fontSizeSixteen,
+              fontWeight: fontWeight ?? FontWeight.w500,
+            ),
+          ),
         ),
       ),
     );
