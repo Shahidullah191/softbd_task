@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:softbd_task/routes/routes.dart';
 import 'package:softbd_task/routes/routes_name.dart';
 import 'package:softbd_task/utils/app_color.dart';
@@ -9,6 +10,9 @@ import 'helper/get_di.dart' as di;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+
+  // Initialize the date formatting for Bengali locale
+  await initializeDateFormatting('bn', null);
 
   runApp(const MyApp());
 }
