@@ -76,5 +76,4 @@ class Data {
 
     return '$period $banglaHour:$banglaMinute মি.';
   }
-
 }

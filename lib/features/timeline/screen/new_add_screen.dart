@@ -5,6 +5,7 @@ import 'package:softbd_task/common/custom_snackbar.dart';
 import 'package:softbd_task/features/timeline/controller/timeline_controller.dart';
 import 'package:softbd_task/features/timeline/widget/custom_dropdown_button.dart';
 import 'package:softbd_task/features/timeline/widget/custom_text_field.dart';
+import 'package:softbd_task/features/timeline/widget/new_add_dialog_widget.dart';
 import 'package:softbd_task/utils/app_color.dart';
 import 'package:softbd_task/utils/dimensions.dart';
 import 'package:softbd_task/utils/images.dart';
@@ -19,8 +20,11 @@ class NewAddScreen extends StatefulWidget {
 
 class _NewAddScreenState extends State<NewAddScreen> {
 
-  final TextEditingController _paragraphController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    Get.find<TimelineController>().dataClear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,7 @@ class _NewAddScreenState extends State<NewAddScreen> {
 
                       CustomTextField(
                         hintText: 'অনুচ্ছেদ লিখুন',
-                        controller: _paragraphController,
+                        controller: timelineController.paragraphController,
                         maxWords: 45,
                       ),
                       const SizedBox(height: 20),
@@ -78,9 +82,9 @@ class _NewAddScreenState extends State<NewAddScreen> {
                         hint: 'নির্বাচন করুন',
                         icon: Images.calenderUnselectedIcon,
                         items: const ['আজ', 'আগামী ১ ঘণ্টা', 'আগামী ২ ঘণ্টা', 'আগামী ৪ ঘণ্টা', 'আগামী ৮ ঘণ্টা', 'আগামী ১৬ ঘণ্টা'],
-                        value: timelineController.selectedDate,
+                        value: timelineController.selectedDateTime,
                         onChanged: (value) {
-                          timelineController.setSelectedDate(value!);
+                          timelineController.setSelectedDateTime(value!);
                         },
                       ),
                       const SizedBox(height: 20),
@@ -110,7 +114,7 @@ class _NewAddScreenState extends State<NewAddScreen> {
 
                       CustomTextField(
                         hintText: 'কার্যক্রমের বিবরণ লিখুন',
-                        controller: _descriptionController,
+                        controller: timelineController.descriptionController,
                         maxLines: 10,
                         maxWords: 120,
                       ),
@@ -124,55 +128,19 @@ class _NewAddScreenState extends State<NewAddScreen> {
                 text: 'সংরক্ষন করুন',
                 textColor: AppColor.white,
                 onTap: () {
-                  if(_paragraphController.text.isEmpty){
+                  if(timelineController.paragraphController.text.isEmpty){
                     showCustomSnackBar('অনুচ্ছেদ লিখুন');
                   }else if(timelineController.selectedParagraphDivision == null){
                     showCustomSnackBar('অনুচ্ছেদের বিভাগ নির্বাচন করুন');
-                  }else if(timelineController.selectedDate == null){
+                  }else if(timelineController.selectedDateTime == null){
                     showCustomSnackBar('তারিখ ও সময় নির্বাচন করুন');
                   }else if(timelineController.selectedLocation == null){
                     showCustomSnackBar('স্থান নির্বাচন করুন');
-                  }else if(_descriptionController.text.isEmpty){
+                  }else if(timelineController.descriptionController.text.isEmpty){
                     showCustomSnackBar('অনুচ্ছেদের বিবরণ লিখুন');
                   }
                   else{
-                    showDialog(
-                      context: context,
-                      builder: (context) => SizedBox(
-                        child: AlertDialog(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusTwelve)),
-                          surfaceTintColor: AppColor.white,
-                          insetPadding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
-                          contentPadding: const EdgeInsets.only(
-                            top: Dimensions.paddingSizeTwentyFive, bottom: Dimensions.paddingSizeTwenty,
-                            left: Dimensions.paddingSizeForty, right: Dimensions.paddingSizeForty,
-                          ),
-                          content: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(Images.checkMarkIcon, width: 83, height: 75),
-                                const SizedBox(height: 20),
-
-                                Text('নতুন অনুচ্ছেদ সংরক্ষন', style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
-                                const SizedBox(height: 10),
-
-                                Text('আপনার সময়রেখাতে নতুন অনুচ্ছেদ সংরক্ষণ সম্পুর্ন হয়েছে', style: notoSerifRegular.copyWith(color: AppColor.grey), textAlign: TextAlign.center),
-                                const SizedBox(height: 20),
-
-                                CustomButton(
-                                  text: 'আরও যোগ করুন',
-                                  width: context.width * 0.45,
-                                  textColor: AppColor.white,
-                                  onTap: () => Navigator.pop(context),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
+                    newAddDialogWidget(context);
                   }
                 },
               ),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:softbd_task/features/dashboard/screens/dashboard_screen.dart';
 import 'package:softbd_task/features/home/screens/home_screen.dart';
+import 'package:softbd_task/features/notification/screen/notification_screen.dart';
 import 'package:softbd_task/features/pick_camera/screen/pick_camera_screen.dart';
 import 'package:softbd_task/features/profile/screen/profile_screen.dart';
 import 'package:softbd_task/features/schedule_menu/screen/schedule_menu_screen.dart';
@@ -44,6 +45,11 @@ class AppRoutes {
     GetPage(
       name: RoutesName.newAddScreen,
       page: () => const NewAddScreen(),
+    ),
+
+    GetPage(
+      name: RoutesName.notificationScreen,
+      page: () => const NotificationScreen(),
     ),
 
   ];

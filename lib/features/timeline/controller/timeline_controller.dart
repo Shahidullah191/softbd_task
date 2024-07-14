@@ -8,24 +8,8 @@ class TimelineController extends GetxController implements GetxService {
   final TimelineRepository timelineRepository;
   TimelineController({required this.timelineRepository});
 
-  TimelineModel? _timelineModel;
-  TimelineModel? get timelineModel => _timelineModel;
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  Future<void> getTimelineData() async {
-    _isLoading = true;
-    update();
-    final response = await timelineRepository.getTimelineData();
-    if(response.statusCode == 200) {
-      _timelineModel = TimelineModel.fromJson(response.body);
-    }else {
-      ApiChecker.checkApi(response);
-    }
-    _isLoading = false;
-    update();
-  }
+  List<Data>? _timelineDataList;
+  List<Data>? get timelineDataList => _timelineDataList;
 
   String? _selectedParagraphDivision;
   String? get selectedParagraphDivision => _selectedParagraphDivision;
@@ -33,8 +17,53 @@ class TimelineController extends GetxController implements GetxService {
   String? _selectedLocation;
   String? get selectedLocation => _selectedLocation;
 
-  String? _selectedDate;
-  String? get selectedDate => _selectedDate;
+  String? _selectedDateTime;
+  String? get selectedDateTime => _selectedDateTime;
+
+  DateTime? _selectedDate;
+  DateTime? get selectedDate => _selectedDate;
+
+  final TextEditingController _paragraphController = TextEditingController();
+  TextEditingController get paragraphController => _paragraphController;
+
+  final TextEditingController _descriptionController = TextEditingController();
+  TextEditingController get descriptionController => _descriptionController;
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  @override
+  void onClose() {
+    super.onClose();
+    // Clean up the controller when the widget is disposed
+    _timelineDataList = null;
+    _selectedParagraphDivision = null;
+    _selectedLocation = null;
+    _selectedDate = null;
+    _isLoading = false;
+  }
+
+  Future<void> getTimelineData({String? date}) async {
+    _isLoading = true;
+    update();
+    final response = await timelineRepository.getTimelineData();
+    if(response.statusCode == 200) {
+
+      _timelineDataList = [];
+
+      if(date != null) {
+        _timelineDataList?.addAll(response.body['data'].where((data) => data['date'] == date).map<Data>((data) => Data.fromJson(data)).toList());
+      }else {
+        _timelineDataList?.addAll(response.body['data'].map<Data>((data) => Data.fromJson(data)).toList());
+      }
+
+    }else {
+      ApiChecker.checkApi(response);
+    }
+    _isLoading = false;
+    update();
+  }
+
 
   void setSelectedParagraphDivision(String value) {
     _selectedParagraphDivision = value;
@@ -46,9 +75,32 @@ class TimelineController extends GetxController implements GetxService {
     update();
   }
 
-  void setSelectedDate(String value) {
-    _selectedDate = value;
+  void setSelectedDateTime(String value) {
+    _selectedDateTime = value;
     update();
+  }
+
+  Future<void> setSelectedDate(DateTime date) async {
+    _selectedDate = date;
+
+    DateTime dateTime = date;
+    int timestamp = dateTime.millisecondsSinceEpoch ~/ 1000;
+
+    await getTimelineData(date: timestamp.toString());
+    update();
+  }
+
+  void setCurrentDate(DateTime date){
+    _selectedDate = date;
+    update();
+  }
+
+  void dataClear(){
+    _paragraphController.clear();
+    _descriptionController.clear();
+    _selectedParagraphDivision = null;
+    _selectedLocation = null;
+    _selectedDate = null;
   }
 
 }

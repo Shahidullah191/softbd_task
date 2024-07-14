@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:softbd_task/utils/dimensions.dart';
+import 'package:softbd_task/utils/styles.dart';
 
 class PickCameraScreen extends StatelessWidget {
   const PickCameraScreen({super.key});
@@ -7,57 +9,13 @@ class PickCameraScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ক্যামেরা বাছাই করুন'),
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text('ক্যামেরা পেজ', style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'আপনার পছন্দের ক্যামেরা বাছাই করুন',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle camera selection
-              },
-              icon: Icon(Icons.camera_alt),
-              label: Text('ক্যামেরা ১'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle camera selection
-              },
-              icon: Icon(Icons.camera_alt),
-              label: Text('ক্যামেরা ২'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle camera selection
-              },
-              icon: Icon(Icons.camera_alt),
-              label: Text('ক্যামেরা ৩'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-            ),
-          ],
-        ),
+      body: Center(
+        child: Text('ক্যামেরা পেজ বিস্তারিত', style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
       ),
     );
   }

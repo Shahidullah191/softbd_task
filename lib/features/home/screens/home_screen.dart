@@ -4,6 +4,7 @@ import 'package:softbd_task/features/home/controller/home_controller.dart';
 import 'package:softbd_task/features/home/model/menu_list.dart';
 import 'package:softbd_task/features/home/widget/custom_circular_progress_indicator.dart';
 import 'package:softbd_task/features/home/widget/time_box_widget.dart';
+import 'package:softbd_task/routes/routes_name.dart';
 import 'package:softbd_task/utils/app_color.dart';
 import 'package:softbd_task/utils/dimensions.dart';
 import 'package:softbd_task/utils/images.dart';
@@ -33,14 +34,19 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: Dimensions.marginSizeTen),
-            padding: const EdgeInsets.all(Dimensions.paddingSizeFive),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColor.grey.withOpacity(0.07),
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () => Get.toNamed(RoutesName.getNotificationScreen()),
+            child: Container(
+              margin: const EdgeInsets.only(right: Dimensions.marginSizeTen),
+              padding: const EdgeInsets.all(Dimensions.paddingSizeFive),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColor.grey.withOpacity(0.07),
+              ),
+              child: Image.asset(Images.notificationIcon, width: 24, height: 24),
             ),
-            child: Image.asset(Images.notificationIcon, width: 24, height: 24),
           ),
         ],
       ),

@@ -1,9 +1,9 @@
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:softbd_task/common/custom_button.dart';
 import 'package:softbd_task/features/timeline/controller/timeline_controller.dart';
+import 'package:softbd_task/features/timeline/widget/date_list_widget.dart';
 import 'package:softbd_task/features/timeline/widget/timeline_shimmer_widget.dart';
 import 'package:softbd_task/routes/routes_name.dart';
 import 'package:softbd_task/utils/app_color.dart';
@@ -21,12 +21,6 @@ class TimeLineScreen extends StatefulWidget {
 class _TimeLineScreenState extends State<TimeLineScreen> {
 
   @override
-  void initState() {
-    super.initState();
-    Get.find<TimelineController>().getTimelineData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -40,14 +34,19 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
         title: Text('সময়রেখা', style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
         centerTitle: true,
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: Dimensions.marginSizeTen),
-            padding: const EdgeInsets.all(Dimensions.paddingSizeFive),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColor.grey.withOpacity(0.07),
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () => Get.toNamed(RoutesName.getNotificationScreen()),
+            child: Container(
+              margin: const EdgeInsets.only(right: Dimensions.marginSizeTen),
+              padding: const EdgeInsets.all(Dimensions.paddingSizeFive),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColor.grey.withOpacity(0.07),
+              ),
+              child: Image.asset(Images.notificationIcon, width: 24, height: 24),
             ),
-            child: Image.asset(Images.notificationIcon, width: 24, height: 24),
           ),
         ],
       ),
@@ -75,43 +74,14 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-          
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                    boxShadow: [BoxShadow(color: AppColor.black.withOpacity(0.15), spreadRadius: 0, blurRadius: 5)],
-                  ),
-                  child: EasyDateTimeLine(
-                    initialDate: DateTime.now(),
-                    onDateChange: (selectedDate) {
-                      //`selectedDate` the new date selected.
-                    },
 
-                    dayProps: const EasyDayProps(
-                      dayStructure: DayStructure.dayStrDayNum,
-                      activeDayStyle: DayStyle(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xff3371FF),
-                              Color(0xff8426D6),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                const DateListWidget(),
                 const SizedBox(height: 20),
           
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+                  margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeTwenty),
                   decoration: BoxDecoration(
                     color: AppColor.white,
                     borderRadius: BorderRadius.circular(Dimensions.radiusTen),
@@ -123,13 +93,13 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                       Text('আজকের কার্যক্রম', style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
                       const SizedBox(height: 20),
           
-                      timelineController.timelineModel?.data != null ? timelineController.timelineModel!.data!.isNotEmpty ? ListView.builder(
+                      timelineController.timelineDataList != null ? timelineController.timelineDataList!.isNotEmpty ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: timelineController.timelineModel?.data?.length,
+                        itemCount: timelineController.timelineDataList?.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeTwenty),
+                            padding: EdgeInsets.only(bottom: index == timelineController.timelineDataList!.length - 1 ? 0 : Dimensions.paddingSizeTwenty),
                             child: Row(
                               children: [
                                 Padding(
@@ -137,11 +107,11 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        timelineController.timelineModel?.data?[index].date?.split(' ')[0] ?? '',
+                                        timelineController.timelineDataList?[index].date?.split(' ')[0] ?? '',
                                         style: notoSerifMedium.copyWith(color: index.isEven ? AppColor.black : AppColor.blue),
                                       ),
                                       Text(
-                                        '${timelineController.timelineModel?.data?[index].date?.split(' ')[1] ?? ''} ${timelineController.timelineModel?.data?[index].date?.split(' ')[2] ?? ''}',
+                                        '${timelineController.timelineDataList?[index].date?.split(' ')[1] ?? ''} ${timelineController.timelineDataList?[index].date?.split(' ')[2] ?? ''}',
                                         style: notoSerifMedium.copyWith(color: index.isEven ? AppColor.black : AppColor.blue),
                                       ),
                                     ],
@@ -170,22 +140,22 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                                             const Icon(Icons.access_time, color: AppColor.white, size: 20),
                                             const SizedBox(width: 5),
 
-                                            Text(timelineController.timelineModel?.data?[index].date ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
+                                            Text(timelineController.timelineDataList?[index].date ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
                                           ],
                                         ),
                                         const SizedBox(height: 10),
 
-                                        Text(timelineController.timelineModel?.data?[index].name ?? '', style: notoSerifMedium.copyWith(color: AppColor.white, fontWeight: FontWeight.w600)),
+                                        Text(timelineController.timelineDataList?[index].name ?? '', style: notoSerifMedium.copyWith(color: AppColor.white, fontWeight: FontWeight.w600)),
                                         const SizedBox(height: 10),
 
-                                        Text(timelineController.timelineModel?.data?[index].category ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
+                                        Text(timelineController.timelineDataList?[index].category ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
 
                                         Row(
                                           children: [
                                             Image.asset(Images.locationIcon, width: 15, height: 15, color: AppColor.white),
                                             const SizedBox(width: 5),
 
-                                            Text(timelineController.timelineModel?.data?[index].location ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
+                                            Text(timelineController.timelineDataList?[index].location ?? '', style: notoSerifMedium.copyWith(color: AppColor.white)),
                                           ],
                                         ),
                                       ],
@@ -196,7 +166,10 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                             ),
                           );
                         },
-                      ) : const Center(child: Text('কোন তথ্য পাওয়া যায়নি')) : const TimelineShimmerWidget(),
+                      ) : const Center(child: Padding(
+                        padding: EdgeInsets.all(50),
+                        child: Text('কোন তথ্য পাওয়া যায়নি'),
+                      )) : const TimelineShimmerWidget(),
                     ],
                   ),
                 ),
@@ -209,9 +182,9 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
   }
 
   String formatDate(DateTime date) {
-    final DateFormat dayFormat = DateFormat('EEE', 'bn'); // Weekday in Bengali
-    final DateFormat dateFormat = DateFormat('d', 'bn'); // Day in Bengali
-    final DateFormat monthFormat = DateFormat('MMMM', 'bn'); // Month in Bengali
+    final DateFormat dayFormat = DateFormat('EEE', 'bn');
+    final DateFormat dateFormat = DateFormat('d', 'bn');
+    final DateFormat monthFormat = DateFormat('MMMM', 'bn');
 
     final DateTime today = DateTime.now();
 

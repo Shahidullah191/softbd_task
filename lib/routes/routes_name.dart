@@ -7,6 +7,7 @@ class RoutesName {
   static const String scheduleMenuScreen = '/schedule-menu-screen';
   static const String profileScreen = '/profile-screen';
   static const String newAddScreen = '/new-add-screen';
+  static const String notificationScreen = '/notification-screen';
 
 
   static String getDashboardScreen() => dashboardScreen;
@@ -16,5 +17,6 @@ class RoutesName {
   static String getScheduleMenuScreen () => scheduleMenuScreen;
   static String getProfileScreen () => profileScreen;
   static String getNewAddScreen () => newAddScreen;
+  static String getNotificationScreen () => notificationScreen;
 
 }
