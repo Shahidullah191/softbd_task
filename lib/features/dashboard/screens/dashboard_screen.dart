@@ -77,17 +77,35 @@ class DashboardScreenState extends State<DashboardScreen> {
       },
       child: Scaffold(
 
-        floatingActionButton: !GetPlatform.isMobile ? null : Material(
+        floatingActionButton: Material(
           elevation: 4,
           shape: const CircleBorder(),
-          child: FloatingActionButton(
-            shape: const CircleBorder(),
-            backgroundColor: AppColor.primary,
-            onPressed: () => _setPage(2),
-            child: Image.asset(
-              Images.cameraIcon, height: 35, width: 35,
-              color: AppColor.white,
-            ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 56.0,
+                height: 56.0,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColor.secondary,
+                      AppColor.primary
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () => _setPage(2),
+                elevation: 0,
+                shape: const CircleBorder(),
+                backgroundColor: Colors.transparent,
+                child: Image.asset(Images.cameraIcon, height: 35, width: 35, color: Colors.white),
+              ),
+            ],
           ),
         ),
         floatingActionButtonLocation: !GetPlatform.isMobile ? null : FloatingActionButtonLocation.centerDocked,
@@ -100,16 +118,37 @@ class DashboardScreenState extends State<DashboardScreen> {
           surfaceTintColor: Colors.transparent,
           shape: const CircularNotchedRectangle(),
 
-          child: Padding(
-            padding: const EdgeInsets.all(Dimensions.paddingSizeFive),
-            child: Row(children: [
-              BottomNavItemWidget(iconData: Icons.home, isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
-              BottomNavItemWidget(iconData: Icons.shopping_bag, isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
-              const Expanded(child: SizedBox()),
-              BottomNavItemWidget(iconData: Icons.monetization_on, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
-              BottomNavItemWidget(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _setPage(4)),
-            ]),
-          ),
+          child: Row(children: [
+            BottomNavItemWidget(
+              selectedIcon: Images.homeSelectedIcon,
+              unselectedIcon: Images.homeUnselectedIcon,
+              isSelected: _pageIndex == 0,
+              onTap: () => _setPage(0),
+            ),
+
+            BottomNavItemWidget(
+              selectedIcon: Images.calenderSelectedIcon,
+              unselectedIcon: Images.calenderUnselectedIcon,
+              isSelected: _pageIndex == 1,
+              onTap: () => _setPage(1),
+            ),
+
+            const Expanded(child: SizedBox()),
+
+            BottomNavItemWidget(
+              selectedIcon: Images.scheduleMenuUnselectedIcon,
+              unselectedIcon: Images.scheduleMenuUnselectedIcon,
+              isSelected: _pageIndex == 3,
+              onTap: () => _setPage(3),
+            ),
+
+            BottomNavItemWidget(
+              selectedIcon: Images.profileUnselectedIcon,
+              unselectedIcon: Images.profileUnselectedIcon,
+              isSelected: _pageIndex == 4,
+              onTap: () => _setPage(4),
+            ),
+          ]),
         ),
         body: PageView.builder(
           controller: _pageController,

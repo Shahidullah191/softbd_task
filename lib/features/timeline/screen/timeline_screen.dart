@@ -1,3 +1,4 @@
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,8 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.white,
+        surfaceTintColor: AppColor.white,
         leading: const Padding(
           padding: EdgeInsets.only(left: Dimensions.paddingSizeTen),
           child: Icon(Icons.menu),
@@ -57,9 +60,7 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(formatDate(DateTime.now()),
-
-                        style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
+                    Text(formatDate(DateTime.now()), style: notoSerifBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
           
                     CustomButton(
                       onTap: () {
@@ -76,11 +77,34 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
                 const SizedBox(height: 20),
           
                 Container(
-                  height: 100,
+                  height: 300,
                   decoration: BoxDecoration(
                     color: AppColor.white,
                     borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                     boxShadow: [BoxShadow(color: AppColor.black.withOpacity(0.15), spreadRadius: 0, blurRadius: 5)],
+                  ),
+                  child: EasyDateTimeLine(
+                    initialDate: DateTime.now(),
+                    onDateChange: (selectedDate) {
+                      //`selectedDate` the new date selected.
+                    },
+
+                    dayProps: const EasyDayProps(
+                      dayStructure: DayStructure.dayStrDayNum,
+                      activeDayStyle: DayStyle(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xff3371FF),
+                              Color(0xff8426D6),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),

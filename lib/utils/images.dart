@@ -17,8 +17,8 @@ class Images {
   static String get calenderUnselectedIcon => 'calender_unselected'.png;
   static String get scheduleMenuUnselectedIcon => 'schedule_menu_unselected'.png;
   static String get profileUnselectedIcon => 'profile_unselected'.png;
-
-
+  static String get homeSelectedIcon => 'selected_home'.png;
+  static String get calenderSelectedIcon => 'selected_calender'.png;
 }
 
 

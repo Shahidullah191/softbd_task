@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softbd_task/features/home/controller/home_controller.dart';
 import 'package:softbd_task/features/home/model/menu_list.dart';
-import 'package:softbd_task/features/home/screens/controller/home_controller.dart';
-import 'package:softbd_task/features/home/screens/widget/custom_circular_progress_indicator.dart';
-import 'package:softbd_task/features/home/screens/widget/time_box_widget.dart';
+import 'package:softbd_task/features/home/widget/custom_circular_progress_indicator.dart';
+import 'package:softbd_task/features/home/widget/time_box_widget.dart';
 import 'package:softbd_task/utils/app_color.dart';
 import 'package:softbd_task/utils/dimensions.dart';
 import 'package:softbd_task/utils/images.dart';
@@ -16,6 +16,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.white,
+        surfaceTintColor: AppColor.white,
         leading: const Padding(
           padding: EdgeInsets.only(left: Dimensions.paddingSizeTen),
           child: Icon(Icons.menu),
